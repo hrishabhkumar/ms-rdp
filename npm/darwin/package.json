@@ -1,6 +1,6 @@
 {
   "name": "ms-rdp-darwin",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "os": ["darwin"],
   "main": "ms-rdp.darwin.node",
   "files": ["ms-rdp.darwin.node"],

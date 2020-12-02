@@ -1,6 +1,6 @@
 {
   "name": "ms-rdp-win32",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "os": ["win32"],
   "main": "ms-rdp.win32.node",
   "files": ["ms-rdp.win32.node"],
