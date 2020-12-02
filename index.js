@@ -8,4 +8,4 @@ const { loadBinding } = require('@node-rs/helper')
  * loadBinding helper will load `ms-rdp.[PLATFORM].node` from `__dirname` first
  * If failed to load addon, it will fallback to load from `ms-rdp-[PLATFORM]`
  */
-module.exports = loadBinding(__dirname, 'ms-rdp-rs', 'ms-rdp-rs')
+module.exports = loadBinding(__dirname, 'ms-rdp', 'ms-rdp')
