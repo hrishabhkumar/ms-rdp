@@ -14,7 +14,7 @@ napi = { git = "https://github.com/napi-rs/napi-rs", features = ["serde-json"]}
 napi-derive = { git = "https://github.com/napi-rs/napi-rs" }
 hex = { version = "^0.4"}
 winapi = { version = "^0.3", features = ["winsock2"] }
-minifb = { version = "^0.15" }
+minifb = { version = "^0.19" }
 clap = { version = "^2.33"}
 libc = { version = "^0.2"}
 rdp-rs = "0.1.0"
