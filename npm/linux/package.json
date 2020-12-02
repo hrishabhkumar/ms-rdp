@@ -1,9 +1,9 @@
 {
-  "name": "@napi-rs/package-template-linux",
+  "name": "ms-rdp-linux",
   "version": "0.0.8",
   "os": ["linux"],
-  "main": "package-template.linux.node",
-  "files": ["package-template.linux.node"],
+  "main": "ms-rdp.linux.node",
+  "files": ["ms-rdp.linux.node"],
   "description": "Template project for writing node package with napi-rs",
   "keywords": ["napi-rs", "NAPI", "N-API", "Rust", "node-addon", "node-addon-api"],
   "license": "MIT",
@@ -15,5 +15,5 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "repository": "git@github.com:napi-rs/package-template.git"
+  "repository": "git@github.com:hrishabhkumar/ms-rdp.git"
 }

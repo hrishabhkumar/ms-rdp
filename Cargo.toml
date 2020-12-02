@@ -1,7 +1,7 @@
 [package]
 authors = ["LongYinan <lynweklm@gmail.com>"]
 edition = "2018"
-name = "napi-package-template"
+name = "ms-rdp-rs"
 version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -10,8 +10,19 @@ version = "0.1.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-napi = {version = "0.5"}
-napi-derive = {version = "0.5"}
+napi = { git = "https://github.com/napi-rs/napi-rs", features = ["serde-json"]}
+napi-derive = { git = "https://github.com/napi-rs/napi-rs" }
+hex = { version = "^0.4"}
+winapi = { version = "^0.3", features = ["winsock2"] }
+minifb = { version = "^0.15" }
+clap = { version = "^2.33"}
+libc = { version = "^0.2"}
+rdp-rs = "0.1.0"
+hmac = "^0.7"
+neon-serde = "0.2.0"
+serde_derive = "1.0.80"
+serde = "1.0.80"
+serde_json = "1"
 
 [target.'cfg(all(unix, not(target_env = "musl")))'.dependencies]
 jemallocator = {version = "0.3", features = ["disable_initial_exec_tls"]}
@@ -20,7 +31,7 @@ jemallocator = {version = "0.3", features = ["disable_initial_exec_tls"]}
 mimalloc = {version = "0.1"}
 
 [build-dependencies]
-napi-build = "0.2"
+napi-build = { git = "https://github.com/napi-rs/napi-rs" }
 
 [profile.release]
 lto = true

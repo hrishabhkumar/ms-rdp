@@ -1,3 +1,3 @@
-# `@napi-rs/package-template-darwin`
+# `ms-rdp-darwin`
 
-This is the **darwin** 64-bit binary for `@napi-rs/package-template`
+This is the **darwin** 64-bit binary for `ms-rdp`

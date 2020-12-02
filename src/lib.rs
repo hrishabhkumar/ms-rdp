@@ -3,9 +3,12 @@ extern crate napi;
 #[macro_use]
 extern crate napi_derive;
 
-use std::convert::TryInto;
+mod mstsc;
 
-use napi::{CallContext, Env, JsNumber, JsObject, Module, Result, Task};
+pub use mstsc::Server;
+pub use mstsc::start_rdp;
+
+use napi::{CallContext, Env, JsObject, JsNumber, JsUnknown, Result, Task};
 
 #[cfg(all(unix, not(target_env = "musl")))]
 #[global_allocator]
@@ -15,43 +18,50 @@ static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 #[global_allocator]
 static ALLOC: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-register_module!(example, init);
 
-struct AsyncTask(u32);
+struct AsyncTask(Server);
 
 impl Task for AsyncTask {
   type Output = u32;
   type JsValue = JsNumber;
 
   fn compute(&mut self) -> Result<Self::Output> {
-    use std::thread::sleep;
-    use std::time::Duration;
-    sleep(Duration::from_millis(self.0 as u64));
-    Ok(self.0 * 2)
+    start_rdp(&self.0);
+    Ok(2)
   }
 
-  fn resolve(&self, env: &mut Env, output: Self::Output) -> Result<Self::JsValue> {
+  fn resolve(self, env: Env, output: Self::Output) -> Result<Self::JsValue> {
     env.create_uint32(output)
   }
 }
 
-fn init(module: &mut Module) -> Result<()> {
-  module.create_named_method("sync", sync_fn)?;
+pub fn register_js(exports: &mut JsObject) -> Result<()> {
+  exports.create_named_method("startRdpWithoutGui", start_rdp_js)?;
+  exports.create_named_method("startRdpWithGui", start_rdp_sync)?;
+  Ok(())
+}
 
-  module.create_named_method("sleep", sleep)?;
+#[module_exports]
+fn init(mut exports: JsObject) -> Result<()> {
+  register_js(&mut exports)?;
   Ok(())
 }
 
 #[js_function(1)]
-fn sync_fn(ctx: CallContext) -> Result<JsNumber> {
-  let argument: u32 = ctx.get::<JsNumber>(0)?.try_into()?;
-
-  ctx.env.create_uint32(argument + 100)
+fn start_rdp_js(ctx: CallContext) -> Result<JsObject> {
+  let arg0 = ctx.get::<JsUnknown>(0)?;
+  let server: Server = ctx.env.from_js_value(arg0)?;
+  // let de_serialized: AnObject = ctx.env.from_js_value(arg0)?;
+  let task = AsyncTask(server);
+  let async_promise = ctx.env.spawn(task)?;
+  Ok(async_promise.promise_object())
 }
 
 #[js_function(1)]
-fn sleep(ctx: CallContext) -> Result<JsObject> {
-  let argument: u32 = ctx.get::<JsNumber>(0)?.try_into()?;
-  let task = AsyncTask(argument);
-  ctx.env.spawn(task)
+fn start_rdp_sync(ctx: CallContext) -> Result<JsNumber> {
+  let arg0 = ctx.get::<JsUnknown>(0)?;
+  let server: Server = ctx.env.from_js_value(arg0)?;
+  // let de_serialized: AnObject = ctx.env.from_js_value(arg0)?;
+  start_rdp(&server);
+  ctx.env.create_uint32(0)
 }
