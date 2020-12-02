@@ -18,8 +18,8 @@ minifb = { version = "^0.15" }
 clap = { version = "^2.33"}
 libc = { version = "^0.2"}
 rdp-rs = "0.1.0"
-hmac = "^0.7"
-neon-serde = "0.2.0"
+hmac = "^0.10"
+neon-serde = "0.4.0"
 serde_derive = "1.0.80"
 serde = "1.0.80"
 serde_json = "1"
