@@ -175,39 +175,9 @@ jobs:
       - name: Test bindings
         run: yarn test
 
-  test_musl_binding:
-    name: Test bindings on alpine - node@${{ matrix.node }}
-    needs:
-      - build_musl
-    strategy:
-      fail-fast: false
-      matrix:
-        node: ['12', '14']
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: 'Install dependencies'
-        run: yarn install --frozen-lockfile --ignore-scripts --registry https://registry.npmjs.org
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: bindings-linux-musl
-          path: .
-
-      - name: List files
-        run: ls -R .
-        shell: bash
-
-      - name: Run simple tests
-        run: docker run --rm -v $(pwd)/.cargo:/root/.cargo -v $(pwd):/fast-escape -w /fast-escape node:${{ matrix.node }}-alpine sh -c "node ./simple-test.js"
-
   dependabot:
     needs:
       - test_binding
-      - test_musl_binding
     runs-on: ubuntu-latest
     steps:
       - name: auto-merge
@@ -221,7 +191,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - test_binding
-      - test_musl_binding
 
     steps:
       - uses: actions/checkout@v2
