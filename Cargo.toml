@@ -15,7 +15,7 @@ napi-derive = { version = "^1.0.0-alpha.0" }
 hex = { version = "^0.4"}
 winapi = { version = "^0.3", features = ["winsock2"] }
 minifb = { version = "^0.15" }
-clap = { version = "^2.33"}
+clap = { version = "^3.0"}
 libc = { version = "^0.2"}
 rdp-rs = "0.1.0"
 hmac = "^0.10"
