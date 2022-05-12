@@ -10,7 +10,7 @@ version = "0.1.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-napi = { version = "^1.0.0-alpha.0", features = ["serde-json"]}
+napi = { version = "^2.4.3", features = ["serde-json"]}
 napi-derive = { version = "^1.0.0-alpha.0" }
 hex = { version = "^0.4"}
 winapi = { version = "^0.3", features = ["winsock2"] }
